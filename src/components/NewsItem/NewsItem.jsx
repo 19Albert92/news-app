@@ -6,7 +6,7 @@ const NewsItem = ({item}) => {
     return (
         <li className={styles.item}>
             <div className={styles.image} style={{
-                backgroundImage: `url(${item.image})`
+                backgroundImage: `url(${item.image === 'None' ? 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg' : item.image})`
             }}></div>
             <div className={styles.info}>
                 <h4 className={styles.title}>{item.title}</h4>
