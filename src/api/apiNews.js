@@ -10,16 +10,26 @@ const api = axios.create({
     baseURL: BASE_URL
 })
 
-export const getNews = async (page_number = 1, page_size = 10) => {
+export const getNews = async ({page_number = 1, page_size = 10, category}) => {
     try {
         const response = await api.get(`search`, {
             params: {
                 page_number,
-                page_size
+                page_size,
+                category
             }
-        })
+        });
         return response.data;
     } catch (e) {
-        console.log(e)
+        console.log(e);
+    }
+}
+
+export const getCategories = async () => {
+    try {
+        const response = await api.get('available/categories');
+        return response.data;
+    } catch (e) {
+        console.log(e);
     }
 }

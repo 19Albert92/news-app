@@ -1,16 +1,19 @@
 import styles from './styles.module.css';
 import NewsBanner from "@/components/NewsBanner/NewsBanner.jsx";
 import {useEffect, useState} from "react";
-import {getNews} from "@/api/apiNews.js";
+import {getCategories, getNews} from "@/api/apiNews.js";
 import NewsList from "@/components/NewsList/NewsList.jsx";
 import Skeleton from "@/components/Skeleton/Skeleton.jsx";
 import Pagination from "@/components/Pagination/Pagination.jsx";
+import Categories from "@/components/Categies/Categories.jsx";
 
 const Main = () => {
 
     const [news, setNews] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(0);
+    const [selectedCategory, setSelectedCategory] = useState('All');
     const totalPage = 10;
     const pageSize = 10;
     const handleNextPage = () => {
@@ -19,7 +22,6 @@ const Main = () => {
         }
     }
     const handlePreviewsPage = () => {
-        console.log(currentPage)
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1)
         }
@@ -29,10 +31,19 @@ const Main = () => {
         setCurrentPage(pageNumber)
     }
 
+    const handleClickCategory = (category) => {
+        setSelectedCategory(category)
+    }
+
     const fetchingNews = async () => {
+        console.log(selectedCategory)
         try {
             setIsLoading(true)
-            const response = await getNews(currentPage, pageSize);
+            const response = await getNews({
+                page_number: currentPage,
+                page_size: pageSize,
+                category: selectedCategory === 'All' ? null : selectedCategory
+            });
             setNews(response.news);
             setIsLoading(false)
         } catch (e) {
@@ -40,12 +51,27 @@ const Main = () => {
         }
     }
 
-    useEffect(() => {
+    const fetchingCategories = async () => {
+        try {
+            const response = await getCategories();
+            setCategories(['All', ...response.categories]);
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
+    useEffect(() => {
+        fetchingCategories()
+    }, [])
+
+    useEffect(() => {
         fetchingNews()
-    }, [currentPage])
+    }, [currentPage, selectedCategory])
     return (
         <main className={styles.main}>
+
+            <Categories categories={categories} selectedCategory={selectedCategory} setSelectedCategory={handleClickCategory}/>
+
             {news.length > 0 && !isLoading ? <NewsBanner item={news[0]}/> : <Skeleton/>}
 
             <Pagination
