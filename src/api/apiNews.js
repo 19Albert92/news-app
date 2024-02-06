@@ -10,13 +10,21 @@ const api = axios.create({
     baseURL: BASE_URL
 })
 
-export const getNews = async ({page_number = 1, page_size = 10, category}) => {
+export const getNews = async (
+    {
+        page_number = 1,
+        page_size = 10,
+        category,
+        keywords
+    }
+) => {
     try {
         const response = await api.get(`search`, {
             params: {
                 page_number,
                 page_size,
-                category
+                category,
+                keywords
             }
         });
         return response.data;

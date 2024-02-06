@@ -1,15 +1,37 @@
 import styles from './styles.module.css';
-import {formatDate} from "@/helpers/formatDate.js";
+import {useState} from "react";
+import PropTypes from "prop-types";
 
-const Header = () => {
+const Search = ({keywords, setKeywords}) => {
+
+    const [text, setText] = useState(keywords);
+
+    const changeHandler = (e) => {
+        if (e.key === 'Enter') {
+            setKeywords(text)
+        }
+    }
     return (
-        <header className={styles.header}>
-            <h1 className={styles.title}>
-                News Reactify App
-            </h1>
-            <p className={styles.date}>{formatDate(new Date())}</p>
-        </header>
+        <div className={styles.search}>
+            <input
+                className={styles.field}
+                type="text"
+                value={text}
+                onChange={e => setText(e.target.value)}
+                onKeyDown={changeHandler}
+                onBlur={() => {
+                    if (text !== '') {
+                        setKeywords(text);
+                    }
+                }}
+            />
+        </div>
     );
 };
 
-export default Header;
+Search.propTypes = {
+    keywords: PropTypes.string,
+    setKeywords: PropTypes.func,
+}
+
+export default Search;

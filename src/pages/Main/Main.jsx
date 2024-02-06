@@ -6,6 +6,7 @@ import NewsList from "@/components/NewsList/NewsList.jsx";
 import Skeleton from "@/components/Skeleton/Skeleton.jsx";
 import Pagination from "@/components/Pagination/Pagination.jsx";
 import Categories from "@/components/Categies/Categories.jsx";
+import Search from "@/components/Search/Search.jsx";
 
 const Main = () => {
 
@@ -14,6 +15,7 @@ const Main = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(0);
     const [selectedCategory, setSelectedCategory] = useState('All');
+    const [keywords, setKeywords] = useState('');
     const totalPage = 10;
     const pageSize = 10;
     const handleNextPage = () => {
@@ -27,6 +29,10 @@ const Main = () => {
         }
     }
 
+    const handleSearch = (text) => {
+        setKeywords(text)
+    }
+
     const handleClickPage = (pageNumber) => {
         setCurrentPage(pageNumber)
     }
@@ -36,13 +42,13 @@ const Main = () => {
     }
 
     const fetchingNews = async () => {
-        console.log(selectedCategory)
         try {
             setIsLoading(true)
             const response = await getNews({
                 page_number: currentPage,
                 page_size: pageSize,
-                category: selectedCategory === 'All' ? null : selectedCategory
+                category: selectedCategory === 'All' ? null : selectedCategory,
+                keywords: keywords
             });
             setNews(response.news);
             setIsLoading(false)
@@ -66,11 +72,14 @@ const Main = () => {
 
     useEffect(() => {
         fetchingNews()
-    }, [currentPage, selectedCategory])
+    }, [currentPage, selectedCategory, keywords])
     return (
         <main className={styles.main}>
 
-            <Categories categories={categories} selectedCategory={selectedCategory} setSelectedCategory={handleClickCategory}/>
+            <Categories categories={categories} selectedCategory={selectedCategory}
+                        setSelectedCategory={handleClickCategory}/>
+
+            <Search keywords={keywords} setKeywords={handleSearch}/>
 
             {news.length > 0 && !isLoading ? <NewsBanner item={news[0]}/> : <Skeleton/>}
 
