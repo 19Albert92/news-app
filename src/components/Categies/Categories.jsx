@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 const Categories = ({categories, setSelectedCategory, selectedCategory}) => {
     return (
         <div className={styles.categories}>
+            <button
+                className={selectedCategory === 'All' ? styles.active : styles.item}
+                onClick={() => setSelectedCategory('All')}
+            >All</button>
             {categories.map((category, index) =>
                 <button
                     key={index}
