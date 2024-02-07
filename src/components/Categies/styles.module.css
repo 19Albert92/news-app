@@ -5,8 +5,8 @@
     align-items: flex-start;
     box-sizing: border-box;
     overflow-x: auto;
-    white-space: nowrap;
-    scrollbar-width: none;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
 }
 
 .active,

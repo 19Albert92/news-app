@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import styles from './styles.module.css';
 import NewsItem from "@/components/NewsItem/NewsItem.jsx";
+import withSkeleton from "@/helpers/hocs/withSkeleton.jsx";
 
 const NewsList = ({news}) => {
     return (
@@ -15,8 +16,11 @@ const NewsList = ({news}) => {
     );
 };
 
+const NewsItemWithSkeleton = withSkeleton(NewsList, 'item', 10)
+
+
 NewsList.propTypes = {
     news: PropTypes.array
 }
 
-export default NewsList;
+export default NewsItemWithSkeleton;
