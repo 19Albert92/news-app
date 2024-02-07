@@ -1,11 +1,11 @@
 import styles from './styles.module.css';
 import PropTypes from "prop-types";
 
-const Skeleton = ({count = 1, type = 'banner'}) => {
+const Skeleton = ({count = 1, type = 'banner', directory = 'column'}) => {
     return (
         <>
             {count > 1 ?
-                <ul className={styles.list}>
+                <ul className={directory === 'column' ? styles.column_list : styles.row_list}>
                     {[...Array(count)].map((_, index) =>
                         <li key={index} className={type === 'banner' ? styles.banner : styles.item}></li>
                     )}
@@ -18,7 +18,8 @@ const Skeleton = ({count = 1, type = 'banner'}) => {
 
 Skeleton.propTypes = {
     count: PropTypes.number,
-    type: PropTypes.string
+    type: PropTypes.string,
+    directory: PropTypes.string,
 }
 
 export default Skeleton;

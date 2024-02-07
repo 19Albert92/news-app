@@ -2,7 +2,6 @@ import styles from './styles.module.css';
 import {formatTimeAgo} from "@/helpers/formatTimeAgo.js";
 import PropTypes from "prop-types";
 import Image from "@/components/Image/Image.jsx";
-import withSkeleton from "@/helpers/hocs/withSkeleton.jsx";
 
 const NewsBanner = ({item}) => {
     return (
@@ -14,10 +13,8 @@ const NewsBanner = ({item}) => {
     );
 };
 
-const NewsBannerWithSkeleton = withSkeleton(NewsBanner, 'banner', 1)
-
 NewsBanner.propTypes = {
     item: PropTypes.object
 }
 
-export default NewsBannerWithSkeleton;
+export default NewsBanner;

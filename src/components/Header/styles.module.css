@@ -6,8 +6,8 @@
     background-color: white;
     border-bottom: 1px solid #f2f4f5;
     gap: 5px;
-    max-width: 900px;
-    margin: auto;
+    /*max-width: 900px;*/
+    /*margin: auto;*/
 }
 .title {
     font-size: 28px;
