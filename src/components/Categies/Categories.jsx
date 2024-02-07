@@ -1,9 +1,10 @@
 import styles from './styles.module.css';
 import PropTypes from "prop-types";
+import {forwardRef} from "react";
 
-const Categories = ({categories, setSelectedCategory, selectedCategory}) => {
+const Categories = forwardRef(({categories, setSelectedCategory, selectedCategory}, ref) => {
     return (
-        <div className={styles.categories}>
+        <div ref={ref} className={styles.categories}>
             <button
                 className={selectedCategory === 'All' ? styles.active : styles.item}
                 onClick={() => setSelectedCategory('All')}
@@ -17,7 +18,9 @@ const Categories = ({categories, setSelectedCategory, selectedCategory}) => {
             )}
         </div>
     );
-};
+});
+
+Categories.displayName = 'Categories';
 
 Categories.propTypes = {
     categories: PropTypes.array,
