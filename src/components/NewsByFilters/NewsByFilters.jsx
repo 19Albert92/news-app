@@ -1,18 +1,33 @@
 import styles from './styles.module.css';
-import Categories from "@/components/Categies/Categories.jsx";
-import Search from "@/components/Search/Search.jsx";
-import Pagination from "@/components/Pagination/Pagination.jsx";
-import {TOTAL_PAGE} from "@/constants.js";
+import {PAGE_SIZE, TOTAL_PAGE} from "@/constants.js";
 import NewsList from "@/components/NewsList/NewsList.jsx";
 import {useFetch} from "@/helpers/hooks/useFetch.js";
-import {getCategories} from "@/api/apiNews.js";
-import PropTypes from "prop-types";
+import {getNews} from "@/api/apiNews.js";
 import NewsFilters from "@/components/NewsFilters/NewsFilters.jsx";
+import {useState} from "react";
+import PaginationWrapper from "@/components/PaginatationWrapper/PaginationWrapper.jsx";
 
-const NewsByFilters = ({filter, changeFilter, isLoading, news}) => {
+const NewsByFilters = () => {
 
+    const [filter, setFilter] = useState({
+        currentPage: 0,
+        category: 'All',
+        keywords: ''
+    })
 
-    const {data: dataCategories} = useFetch(getCategories);
+    const changeFilter = (field, value) => {
+        setFilter(prev => ({
+            ...prev,
+            [field]: value
+        }))
+    }
+
+    const {data, isLoading} = useFetch(getNews, {
+        page_number: filter.currentPage,
+        page_size: PAGE_SIZE,
+        category: filter.category === 'All' ? null : filter.category,
+        keywords: filter.keywords
+    })
 
     const handleNextPage = () => {
         if (filter.currentPage < TOTAL_PAGE) {
@@ -28,34 +43,22 @@ const NewsByFilters = ({filter, changeFilter, isLoading, news}) => {
     return (
         <section className={styles.section}>
 
-          <NewsFilters filter={filter} changeFilter={changeFilter}/>
+            <NewsFilters filter={filter} changeFilter={changeFilter}/>
 
-            {/*<Pagination*/}
-            {/*    totalPages={TOTAL_PAGE}*/}
-            {/*    handleNextPage={handleNextPage}*/}
-            {/*    handlePreviewsPage={handlePreviewsPage}*/}
-            {/*    handleClickPage={handleClickPage}*/}
-            {/*    currentPage={filter.currentPage}*/}
-            {/*/>*/}
-
-            <NewsList news={news} isLoading={isLoading}/>
-
-            <Pagination
+            <PaginationWrapper
+                top={true}
+                bottom={true}
                 totalPages={TOTAL_PAGE}
                 handleNextPage={handleNextPage}
                 handlePreviewsPage={handlePreviewsPage}
-                handleClickPage={(page) =>  changeFilter('currentPage', page)}
-                currentPage={filter.currentPage}
-            />
+                handleClickPage={(page) => changeFilter('currentPage', page)}
+                currentPage={filter.currentPage}>
+
+                <NewsList news={data?.news} isLoading={isLoading}/>
+
+            </PaginationWrapper>
         </section>
     );
 };
-
-NewsByFilters.propTypes = {
-    filter: PropTypes.object,
-    changeFilter: PropTypes.func,
-    isLoading: PropTypes.bool,
-    news: PropTypes.array,
-}
 
 export default NewsByFilters;
