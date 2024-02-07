@@ -10,6 +10,15 @@ const api = axios.create({
     baseURL: BASE_URL
 })
 
+export const getCurrentNews = async () => {
+    try {
+        const response = await api.get(`latest-news`);
+        return response.data;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 export const getNews = async (
     {
         page_number = 1,
