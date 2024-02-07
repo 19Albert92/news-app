@@ -16,8 +16,10 @@ const NewsItem = ({item}) => {
     );
 };
 
+
 NewsItem.propTypes = {
     item: PropTypes.object
 }
+
 
 export default NewsItem;
