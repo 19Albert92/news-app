@@ -6,10 +6,8 @@ import withSkeleton from "@/helpers/hocs/withSkeleton.jsx";
 const NewsList = ({news}) => {
     return (
         <ul className={styles.list}>
-            {news.map((item, index) => {
-                    if (index !== 0) {
-                        return <NewsItem key={item.id} item={item}/>
-                    }
+            {news.map(item=> {
+                    return <NewsItem key={item.id} item={item}/>
                 }
             )}
         </ul>
