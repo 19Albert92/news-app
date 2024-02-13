@@ -1,41 +1,31 @@
 import styles from './styles.module.css';
 import {PAGE_SIZE, TOTAL_PAGE} from "@/constants.ts";
 import NewsList from "@/components/NewsList/NewsList.tsx";
-import {useFetch} from "@/helpers/hooks/useFetch.ts";
-import {getNews} from "@/api/apiNews.ts";
 import NewsFilters from "@/components/NewsFilters/NewsFilters.tsx";
-import {useState} from "react";
 import PaginationWrapper from "@/components/PaginatationWrapper/PaginationWrapper.tsx";
-import {NewsApiResponse, ParamsType} from "@/interfaces";
-
-interface Filter {
-    currentPage: number,
-    category: string,
-    keywords: string
-}
-
+import {useGetNewsQuery} from "@/store/services/NewsApi.ts";
+import {useAppDispatch, useAppSelector} from "@/store";
+import {setFilters} from "@/store/slices/NewsSlice.ts";
 
 const NewsByFilters = () => {
 
-    const [filter, setFilter] = useState<Filter>({
-        currentPage: 0,
-        category: 'All',
-        keywords: ''
-    })
+    const filter = useAppSelector(state => state.news.filters);
+
+    const filterDispatcher = useAppDispatch();
 
     const changeFilter = (field: string, value: any) => {
-        setFilter(prev => ({
-            ...prev,
-            [field]: value
+        filterDispatcher(setFilters({
+            key: field,
+            value: value
         }))
     }
 
-    const {data, isLoading} = useFetch<NewsApiResponse, ParamsType>(getNews, {
+    const {data, isLoading} = useGetNewsQuery({
         page_number: filter.currentPage,
         page_size: PAGE_SIZE,
         category: filter.category === 'All' ? null : filter.category,
         keywords: filter.keywords
-    })
+    });
 
     const handleNextPage = () => {
         if (filter.currentPage < TOTAL_PAGE) {
