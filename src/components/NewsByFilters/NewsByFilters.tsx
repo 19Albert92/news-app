@@ -14,6 +14,7 @@ interface Filter {
     keywords: string
 }
 
+
 const NewsByFilters = () => {
 
     const [filter, setFilter] = useState<Filter>({
@@ -47,7 +48,6 @@ const NewsByFilters = () => {
         }
     }
 
-    // @ts-ignore
     return (
         <section className={styles.section}>
 

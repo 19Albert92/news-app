@@ -15,3 +15,28 @@
 button {
   cursor: pointer;
 }
+
+/*theme*/
+.app.dark .container {
+  background-color: #23272f;
+}
+
+.app.light .container {
+  background-color: white;
+}
+
+.app.dark p,
+.app.dark h1,
+.app.dark h4,
+.app.dark h3 {
+  color: #f6f7f9;
+}
+
+.app.light p,
+.app.light h1,
+.app.light h4,
+.app.light h3 {
+  color: black;
+}
+
+

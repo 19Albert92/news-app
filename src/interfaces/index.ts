@@ -86,5 +86,5 @@ export interface IPaginationProps {
     handlePreviewsPage: () => void;
     handleNextPage: () => void;
     handleClickPage: (page: number) => void;
-    currentPage: number;
+    currentPage: number
 }
