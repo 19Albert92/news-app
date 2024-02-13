@@ -1,7 +1,17 @@
 import {useEffect, useState} from "react";
 
-export const useFetch = (fetchFunction, params) => {
-    const [data, setData] = useState({
+interface FetchFunction<P, T> {
+    (params?: P): Promise<T>;
+}
+
+interface UseFetchResult<T> {
+    data: T | null | undefined,
+    isLoading: boolean,
+    error: Error | null
+}
+
+export const useFetch = <T, P> (fetchFunction: FetchFunction<P, T>, params?: P) : UseFetchResult<T> => {
+    const [data, setData] = useState<UseFetchResult<T>>({
         data: null,
         isLoading: true,
         error: null
@@ -9,7 +19,7 @@ export const useFetch = (fetchFunction, params) => {
 
     const stringParams = params ? new URLSearchParams(params).toString() : '';
 
-    const changeData = (field, value) => {
+    const changeData = (field: string, value: string | any) => {
         setData(prevState => ({
             ...prevState,
             [field]: value
