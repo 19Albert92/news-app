@@ -1,9 +1,13 @@
 import styles from './styles.module.css';
-import {formatTimeAgo} from "@/helpers/formatTimeAgo.js";
-import PropTypes from "prop-types";
-import Image from "@/components/Image/Image.jsx";
+import {formatTimeAgo} from "@/helpers/formatTimeAgo.ts";
+import Image from "@/components/Image/Image.tsx";
+import {INews} from "@/interfaces";
 
-const NewsBanner = ({item}) => {
+interface Props {
+    item: INews
+}
+
+const NewsBanner = ({item}: Props) => {
     return (
         <div className={styles.banner}>
             <Image image={item?.image}/>
@@ -12,9 +16,5 @@ const NewsBanner = ({item}) => {
         </div>
     );
 };
-
-NewsBanner.propTypes = {
-    item: PropTypes.object
-}
 
 export default NewsBanner;

@@ -1,8 +1,12 @@
-import PropTypes from "prop-types";
 import styles from './styles.module.css';
-import {formatTimeAgo} from "@/helpers/formatTimeAgo.js";
+import {formatTimeAgo} from "@/helpers/formatTimeAgo.ts";
+import {INews} from "@/interfaces";
 
-const NewsItem = ({item}) => {
+interface Props {
+    item: INews
+}
+
+const NewsItem = ({item}: Props) => {
     return (
         <li className={styles.item}>
             <div className={styles.image} style={{
@@ -15,11 +19,6 @@ const NewsItem = ({item}) => {
         </li>
     );
 };
-
-
-NewsItem.propTypes = {
-    item: PropTypes.object
-}
 
 
 export default NewsItem;

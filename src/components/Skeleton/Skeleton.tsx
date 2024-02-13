@@ -1,7 +1,13 @@
 import styles from './styles.module.css';
-import PropTypes from "prop-types";
+import {DirectionType, SkeletonType} from "@/interfaces";
 
-const Skeleton = ({count = 1, type = 'banner', directory = 'column'}) => {
+interface Props {
+    type?: SkeletonType,
+    count?: number,
+    directory?: DirectionType
+}
+
+const Skeleton = ({count = 1, type = 'banner', directory = 'column'}: Props) => {
     return (
         <>
             {count > 1 ?
@@ -15,11 +21,5 @@ const Skeleton = ({count = 1, type = 'banner', directory = 'column'}) => {
         </>
     );
 };
-
-Skeleton.propTypes = {
-    count: PropTypes.number,
-    type: PropTypes.string,
-    directory: PropTypes.string,
-}
 
 export default Skeleton;
