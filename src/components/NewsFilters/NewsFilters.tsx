@@ -13,7 +13,7 @@ interface Filter {
 }
 interface Props {
     filter: Filter,
-    changeFilter: (key: string, value: string | null) => void;
+    changeFilter: (key: string, value: string | null) => void
 }
 
 const NewsFilters = ({filter, changeFilter}: Props) => {

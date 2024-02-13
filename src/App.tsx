@@ -1,14 +1,16 @@
 import Header from "@/components/Header/Header.tsx";
 import Main from "@/pages/Main/Main.tsx";
+import {useTheme} from "@/context/ThemeContext.tsx";
 
 const App = () => {
+    const {isDark} = useTheme();
     return (
-        <>
-           <Header/>
+        <div className={`app ${isDark ? 'dark' : 'light'}`}>
+            <Header/>
             <div className={'container'}>
                 <Main/>
             </div>
-        </>
+        </div>
     );
 };
 
