@@ -1,12 +1,12 @@
-import Header from "./components/Header/Header.tsx";
+import Header from "@/components/Header/Header.tsx";
 import Main from "@/pages/Main/Main.tsx";
-import {useState} from "react";
+import {useTheme} from "@/context/ThemeContext.tsx";
 
 const App = () => {
-    const [isDark, setIsDark] = useState<Boolean>(true);
+    const {isDark} = useTheme();
     return (
         <div className={`app ${isDark ? 'dark' : 'light'}`}>
-           <Header isDark={isDark}/>
+            <Header/>
             <div className={'container'}>
                 <Main/>
             </div>
