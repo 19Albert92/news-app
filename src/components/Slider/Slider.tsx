@@ -1,11 +1,16 @@
 import styles from './styles.module.css';
-import PropTypes from "prop-types";
 import React, {useRef} from "react";
 
-const Slider = ({children, step = 150}) => {
-    const sliderRef = useRef();
+interface Props {
+    children: React.ReactElement,
+    step?: number
+}
 
-    const scroll = (side) => {
+const Slider = ({children, step = 150}: Props) => {
+    const sliderRef = useRef<HTMLElement | null>();
+
+    const scroll = (side: string) => {
+        if (!sliderRef.current) return;
         sliderRef.current.scrollLeft = side === 'left' ? sliderRef.current.scrollLeft -= step : sliderRef.current.scrollLeft += step
     }
     return (
@@ -18,10 +23,5 @@ const Slider = ({children, step = 150}) => {
         </div>
     );
 };
-
-Slider.propTypes = {
-    children: PropTypes.node,
-    step: PropTypes.number
-}
 
 export default Slider;

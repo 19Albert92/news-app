@@ -1,7 +1,7 @@
 import styles from './styles.module.css';
-import PropTypes from "prop-types";
+import {IPaginationProps} from "@/interfaces";
 
-const Pagination = ({totalPages, handleClickPage, handleNextPage, handlePreviewsPage, currentPage}) => {
+const Pagination = ({totalPages, handleClickPage, handleNextPage, handlePreviewsPage, currentPage}: IPaginationProps) => {
     return (
         <div className={styles.pagination}>
             <button className={styles.arrow} onClick={handlePreviewsPage} disabled={currentPage + 1 <= 1}>{'<'}</button>
@@ -16,13 +16,5 @@ const Pagination = ({totalPages, handleClickPage, handleNextPage, handlePreviews
         </div>
     );
 };
-
-Pagination.propTypes = {
-    totalPages: PropTypes.number,
-    currentPage: PropTypes.number,
-    handleClickPage: PropTypes.func,
-    handleNextPage: PropTypes.func,
-    handlePreviewsPage: PropTypes.func,
-}
 
 export default Pagination;

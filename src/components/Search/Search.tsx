@@ -1,12 +1,16 @@
 import styles from './styles.module.css';
 import {useState} from "react";
-import PropTypes from "prop-types";
 
-const Search = ({keywords, setKeywords}) => {
+interface Props {
+    keywords: string,
+    setKeywords: (keywords: string) => void
+}
+
+const Search = ({keywords, setKeywords}: Props) => {
 
     const [text, setText] = useState(keywords);
 
-    const changeHandler = (e) => {
+    const changeHandler = (e: any) => {
         if (e.key === 'Enter') {
             setKeywords(text)
         }
@@ -28,10 +32,5 @@ const Search = ({keywords, setKeywords}) => {
         </div>
     );
 };
-
-Search.propTypes = {
-    keywords: PropTypes.string,
-    setKeywords: PropTypes.func,
-}
 
 export default Search;
