@@ -4,10 +4,15 @@ import Search from "@/components/Search/Search.tsx";
 import {useFetch} from "@/helpers/hooks/useFetch.ts";
 import {getCategories} from "@/api/apiNews.ts";
 import Slider from "@/components/Slider/Slider.tsx";
-import {CategoriesApiResponse, IFilters} from "@/interfaces";
+import {CategoriesApiResponse} from "@/interfaces";
 
+interface Filter {
+    currentPage: number,
+    category: string,
+    keywords: string
+}
 interface Props {
-    filter: IFilters,
+    filter: Filter,
     changeFilter: (key: string, value: string | null) => void;
 }
 
